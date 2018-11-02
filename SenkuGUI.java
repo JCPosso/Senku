@@ -59,6 +59,7 @@ public class SenkuGUI extends JFrame{
 		});
 	}
 	public void prepareElementosMenu(){
+		MenuF = new JFrame("menu");
 		MenuF.setLayout(new GridLayout(5,1));
 		Nuevo = new JButton("Nuevo");
 		Abrir = new JButton("Abrir");
