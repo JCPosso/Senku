@@ -9,6 +9,7 @@ import java.util.*;
 public class SenkuGUI extends JFrame{
 	
 	private JButton menusito;
+	private JFrame MenuF;
 	
 	/*Frame Menu*/
 	private JFrame MenuF;
@@ -46,7 +47,7 @@ public class SenkuGUI extends JFrame{
 	
 	public void prepareAcciones(){
 		setDefaultCloseOperation(0);
-        addWindowListener(new WindowAdapter(){
+        	addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosing(WindowEvent evt){
 				Salga();
@@ -71,7 +72,18 @@ public class SenkuGUI extends JFrame{
 		MenuF.add(Salvar);
 		MenuF.add(Salvar_Como);
 		MenuF.add(Salir);
+		Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+		int Ancho=screenSize.width/2;
+	    	int Alto=screenSize.height/2;
+		MenuF.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
+		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
+		MenuF.addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent evt2){
+				Salga();
+			}
+		});
 		
 	}
 	public void Salga(){
