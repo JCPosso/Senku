@@ -9,7 +9,6 @@ import java.util.*;
 public class SenkuGUI extends JFrame{
 	
 	private JButton menusito;
-	private JFrame MenuF;
 	
 	/*Frame Menu*/
 	private JFrame MenuF;
@@ -60,7 +59,6 @@ public class SenkuGUI extends JFrame{
 		});
 	}
 	public void prepareElementosMenu(){
-		MenuF=new JFrame("Menu");
 		MenuF.setLayout(new GridLayout(5,1));
 		Nuevo = new JButton("Nuevo");
 		Abrir = new JButton("Abrir");
