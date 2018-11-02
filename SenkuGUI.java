@@ -77,20 +77,27 @@ public class SenkuGUI extends JFrame{
 		MenuF.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
-		MenuF.addWindowListener(new WindowAdapter(){
+	MenuF.addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosing(WindowEvent evt2){
-				Salga();
+				Salga2();
 			}
 		});
 		
 	}
 	public void Salga(){
-		if (JOptionPane.showConfirmDialog(null,"Are you sure you want to exit",
+		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit",
 				"Exit?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0){
 					System.exit(0);
 		}
 	}
+		public void Salga2(){
+		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit to Menu?",
+				"Exit?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0){
+					MenuF.dispose();
+		}
+	}
+	
 	
 	public void Pausa(){
 		prepareElementosMenu();
