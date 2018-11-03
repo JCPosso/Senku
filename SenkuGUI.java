@@ -73,7 +73,7 @@ public class SenkuGUI extends JFrame{
 		});
 		Salvar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				openChooser(Salvar);
+				saveChooser(Salvar);
 			}
 		});
 		MenuF.add(Nuevo);
@@ -116,6 +116,12 @@ public class SenkuGUI extends JFrame{
 	public String openChooser(Component par){
 		JFileChooser fc=new JFileChooser();
 		fc.showOpenDialog(par);
+		return fc.getSelectedFile().getAbsolutePath();
+	}
+	
+	public String saveChooser(Component par){
+		JFileChooser fc=new JFileChooser();
+		fc.showSaveDialog(par);
 		return fc.getSelectedFile().getAbsolutePath();
 	}
 
