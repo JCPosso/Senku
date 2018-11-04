@@ -9,34 +9,38 @@ import java.util.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
-public class PanelTableroPrueba extends JFrame{
+public class PanelTableroPrueba extends JPanel{
 	
-	
-	private final int FICHA_SIZE=15;
-	private final int BORDE_FICHA=8;
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
+	
+	private final int FICHA_SIZE=10;
+	private final int BORDE_FICHA=8;
 	private char[][] tablero;
 	private void setTablero(char[][] tableroNuevo){
 		tablero=tableroNuevo;
 	}
-	
-	private PanelTableroPrueba(){
-		prepareElementos();
-		prepareAcciones();
+	public PanelTableroPrueba(){
+		setBackground(Color.green);
+		setPreferredSize(new Dimension(Ancho,Alto)); 
+		setTablero(new char[][] { {'o','o','o','+','+','+','o','o','o',},
+									{'o','o','o','+','+','+','o','o','o'},
+									{'o','o','o','+','+','+','o','o','o'},
+									
+									{'+','+','+','+','+','+','+','+','+'},
+									{'+','+','+','+','x','+','+','+','+'},
+									{'+','+','+','+','+','+','+','+','+'},
+									
+									{'o','o','o','+','+','+','o','o','o'},
+									{'o','o','o','+','+','+','o','o','o'},
+									{'o','o','o','+','+','+','o','o','o'},
 	}
-	private void prepareElementos(){
-		setTitle("SenkuJuego");
-		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
-		setSize(new Dimension(Ancho,Alto));
-	}
-	public void prepareAcciones(){
-		
+	);
 	}
 	 @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
         if (tablero != null){
 
@@ -83,21 +87,4 @@ public class PanelTableroPrueba extends JFrame{
             }
         }
     }
-	public static void main(String args[]){
-	PanelTableroPrueba panel=new PanelTableroPrueba();
-	panel.setTablero(new char[][] { {'o','o','o','+','+','+','o','o','o',},
-									{'o','o','o','+','+','+','o','o','o'},
-									{'o','o','o','+','+','+','o','o','o'},
-									
-									{'+','+','+','+','+','+','+','+','+'},
-									{'+','+','+','+','x','+','+','+','+'},
-									{'+','+','+','+','+','+','+','+','+'},
-									
-									{'o','o','o','+','+','+','o','o','o'},
-									{'o','o','o','+','+','+','o','o','o'},
-									{'o','o','o','+','+','+','o','o','o'},
-	}
-	);
-	panel.setVisible(true);
-	}
 }
