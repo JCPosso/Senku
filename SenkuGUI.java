@@ -19,8 +19,6 @@ public class SenkuGUI extends JFrame{
 	private PanelTableroPrueba juego;
 	private JButton refrescar;
 	
-	private JButton menusito;
-	
 	/*Frame Menu*/
 	private JFrame MenuF;
 	
