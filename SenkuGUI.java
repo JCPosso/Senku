@@ -10,6 +10,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 public class SenkuGUI extends JFrame{
+	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+	private	int Ancho=screenSize.width/2;
+	private	int Alto=screenSize.height/2;
+	
+	private JButton menusito;
+	private JFrame SenkuGame;
+	private PanelTableroPrueba juego;
+	private JButton refrescar;
 	
 	private JButton menusito;
 	
@@ -38,9 +46,6 @@ public class SenkuGUI extends JFrame{
 	
 	private void prepareElementos(){
 		setTitle("Senku");
-		Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-		int Ancho=screenSize.width/2;
-		int Alto=screenSize.height/2;
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
 		menusito=new JButton("Menusito");
@@ -53,6 +58,9 @@ public class SenkuGUI extends JFrame{
 		Nuevo = new JButton("Nuevo");
 		Salvar_Como = new JButton("Salvar Como");
 		Salir = new JButton("Salir");
+
+		SenkuGame = new JFrame("Senku!");
+		refrescar=new JButton("refrescar");
 		
 	}
 	
@@ -61,8 +69,7 @@ public class SenkuGUI extends JFrame{
         	addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosing(WindowEvent evt){
-				if (evt.getSource()==MenuF) Salga2();
-				else Salga();
+				Salga();
 			}
 		});
 		MenuF.addWindowListener(new WindowAdapter(){
@@ -86,6 +93,16 @@ public class SenkuGUI extends JFrame{
 				saveChooser(Salvar);
 			}
 		});
+		Nuevo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				crearJuego();
+			}
+		});
+		refrescar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				refresque();
+			}
+		});
 	}
 	public void prepareElementosMenu(){
 		MenuF.setLayout(new GridLayout(5,1));
@@ -94,14 +111,21 @@ public class SenkuGUI extends JFrame{
 		MenuF.add(Salvar);
 		MenuF.add(Salvar_Como);
 		MenuF.add(Salir);
-		Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-		int Ancho=screenSize.width/2;
-	    	int Alto=screenSize.height/2;
 		MenuF.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
 	}
-	
+	public void prepareElementosTablero(){
+		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
+		SenkuGame.setSize(new Dimension(Ancho,Alto));
+		juego = new PanelTableroPrueba();		
+        	SenkuGame.getContentPane().setLayout(new BorderLayout());
+        	SenkuGame.getContentPane().add(juego,BorderLayout.NORTH);
+        	SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
+
+        	juego.repaint();
+		SenkuGame.setVisible(true);
+	}	
 	
 	public void Salga(){
 		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit",
@@ -118,7 +142,13 @@ public class SenkuGUI extends JFrame{
 	public void Pausa(){
 		prepareElementosMenu();
 	}
-	
+	public void crearJuego(){
+		
+		prepareElementosTablero();
+	}
+	public void refresque(){
+		prepareElementosTablero();
+	}
 	
 	/*salvar
 	*/
