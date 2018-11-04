@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+
 public class SenkuGUI extends JFrame{
 	
 	private JButton menusito;
@@ -41,7 +44,16 @@ public class SenkuGUI extends JFrame{
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
 		menusito=new JButton("Menusito");
-		add(menusito);
+		add(menusito);		
+		/* prepara elementos menu*/
+		MenuF = new JFrame("menu");
+		
+		Abrir = new JButton("Abrir");
+		Salvar = new JButton("Salvar");
+		Nuevo = new JButton("Nuevo");
+		Salvar_Como = new JButton("Salvar Como");
+		Salir = new JButton("Salir");
+		
 	}
 	
 	public void prepareAcciones(){
@@ -49,7 +61,14 @@ public class SenkuGUI extends JFrame{
         	addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosing(WindowEvent evt){
-				Salga();
+				if (evt.getSource()==MenuF) Salga2();
+				else Salga();
+			}
+		});
+		MenuF.addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent evt2){
+				Salga2();
 			}
 		});
 		menusito.addActionListener(new ActionListener(){
@@ -57,15 +76,6 @@ public class SenkuGUI extends JFrame{
 				Pausa();
 			}
 		});
-	}
-	public void prepareElementosMenu(){
-		MenuF = new JFrame("menu");
-		MenuF.setLayout(new GridLayout(5,1));
-		Nuevo = new JButton("Nuevo");
-		Abrir = new JButton("Abrir");
-		Salvar = new JButton("Salvar");
-		Salvar_Como = new JButton("Salvar Como");
-		Salir = new JButton("Salir");
 		Abrir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				openChooser(Abrir);
@@ -76,6 +86,9 @@ public class SenkuGUI extends JFrame{
 				saveChooser(Salvar);
 			}
 		});
+	}
+	public void prepareElementosMenu(){
+		MenuF.setLayout(new GridLayout(5,1));
 		MenuF.add(Nuevo);
 		MenuF.add(Abrir);
 		MenuF.add(Salvar);
@@ -87,14 +100,9 @@ public class SenkuGUI extends JFrame{
 		MenuF.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
-	MenuF.addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent evt2){
-				Salga2();
-			}
-		});
-		
 	}
+	
+	
 	public void Salga(){
 		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit",
 				"Exit?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0){
@@ -107,11 +115,11 @@ public class SenkuGUI extends JFrame{
 					MenuF.dispose();
 		}
 	}
-	
-	
 	public void Pausa(){
 		prepareElementosMenu();
 	}
+	
+	
 	/*salvar
 	*/
 	public void openChooser(Component par){
