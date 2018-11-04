@@ -112,17 +112,28 @@ public class SenkuGUI extends JFrame{
 	public void Pausa(){
 		prepareElementosMenu();
 	}
-	
-	public String openChooser(Component par){
+	/*salvar
+	*/
+	public void openChooser(Component par){
 		JFileChooser fc=new JFileChooser();
-		fc.showOpenDialog(par);
-		return fc.getSelectedFile().getAbsolutePath();
+		FileNameExtensionFilter filtro =new FileNameExtensionFilter("Archivos java","java");
+		fc.setFileFilter(filtro);
+		int r=fc.showOpenDialog(par);
+		if(r==JFileChooser.APPROVE_OPTION){
+			fc.getSelectedFile();
+			System.out.println("You chose to open this file: " +
+            fc.getSelectedFile().getName());
+		}
+		
 	}
-	
-	public String saveChooser(Component par){
+	/*guardar
+	*/	
+	public void saveChooser(Component par){
 		JFileChooser fc=new JFileChooser();
-		fc.showSaveDialog(par);
-		return fc.getSelectedFile().getAbsolutePath();
+		int r=fc.showSaveDialog(par);
+		if(r==JFileChooser.APPROVE_OPTION){
+			System.out.println("El archivo fue guardado"+ "Action :"+JFileChooser.APPROVE_OPTION);
+		}
 	}
 
 
