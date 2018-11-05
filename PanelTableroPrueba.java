@@ -14,17 +14,20 @@ public class PanelTableroPrueba extends JPanel{
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
-	private Color colorFicha;
+	
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
+	private int size ;
+	
 	private char[][] tablero;
 	private void setTablero(char[][] tableroNuevo){
 		tablero=tableroNuevo;
+		size = tablero.length;
 	}
 	public PanelTableroPrueba(){
-		setBackground(Color.green);
+		setBackground(Color.blue);
 		setPreferredSize(new Dimension(Ancho,Alto)); 
-		setTablero(new char[][] { {'o','o','o','+','+','+','o','o','o',},
+		setTablero(new char[][] { 	{'o','o','o','+','+','+','o','o','o',},
 									{'o','o','o','+','+','+','o','o','o'},
 									{'o','o','o','+','+','+','o','o','o'},
 									
@@ -43,13 +46,9 @@ public class PanelTableroPrueba extends JPanel{
         super.paintComponent(g);
 
         if (tablero != null){
-
-            int posX = (int)(Ancho*0.1)+BORDE_FICHA;
-            int posY = (int)(Alto*0.1)+BORDE_FICHA;
-            int size = tablero.length;
-
+            int posX = BORDE_FICHA;
+            int posY = BORDE_FICHA;
             for (int y = 0; y < size; y++) {
-
                 for (int x = 0; x < size; x++) {
 
                     if (tablero[y][x] == '+') {
@@ -57,39 +56,43 @@ public class PanelTableroPrueba extends JPanel{
                     } else if (tablero[y][x] == 'x') {
                         pintaCirculo(g, posX, posY, FICHA_SIZE, Color.yellow);
                     } else if (tablero[y][x] == 'o') {
-                        pintaCirculoOtro(g, posX, posY, FICHA_SIZE,Color.blue);
+                        pintaCirculo(g, posX, posY, FICHA_SIZE,Color.blue);
                     }
-
                     posX = posX + (FICHA_SIZE * 2) + BORDE_FICHA;
                 }
-                posX = (int)(Ancho*0.1)+BORDE_FICHA;
+                posX = BORDE_FICHA;
                 posY = posY + (FICHA_SIZE * 2) + BORDE_FICHA;
             }
         }
     }
     
-    private void pintaCirculoOtro(Graphics g, int posX, int posY, int radio, Color color){
+    private void pintaCirculo(Graphics g, int posX, int posY, int radio, Color color){
         int size = radio * 2;
         g.setColor(color);        
         g.fillOval(posX, posY, size, size);
     }
-    private void pintaCirculo(Graphics g, int posX, int posY, int radio, Color color){
-
-	
-        int size = radio * 2;
-
-        for (int x=size; x > 1; x=x-2){
-            g.setColor(color);
-            g.fillOval(posX, posY, x, x);
-            if ((x % 4) == 0.0){
-                posY++;
-                posX++;
-            }
-        }
-    }
-	
-	public void fichasColor(){
-		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
-		repaint();
+	public void ClickFicha(MouseEvent ev){
+		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
+        int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
+        int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
+		
+	}
+	public void jugar(int fi, int ci ,int ff , int cf ){
+		if(estaMarcada(ff,cf)){
+			//marcarFicha(fi,ci);
+			//desmarcarFicha(ff,cf);
+			//eliminarfichaMitad();
+			
+		
+		//verificarsiganó
+	}
+	public boolean estaMarcada( int posX ,int posY){
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
+					if (tablero[posX][posY]=='x')
+						return true;
+				}		
+			}
+			return false;
 	}
 }
