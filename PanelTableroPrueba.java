@@ -83,7 +83,7 @@ public class PanelTableroPrueba extends JPanel{
 			//desmarcarFicha(ff,cf);
 			//eliminarfichaMitad();
 			
-		
+		}
 		//verificarsiganó
 	}
 	public boolean estaMarcada( int posX ,int posY){
