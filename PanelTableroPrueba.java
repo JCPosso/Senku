@@ -18,7 +18,6 @@ public class PanelTableroPrueba extends JPanel{
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
 	private int size ;
-	colorFicha=Color.red;
 	private char[][] tablero;
 	private void setTablero(char[][] tableroNuevo){
 		tablero=tableroNuevo;
@@ -26,7 +25,7 @@ public class PanelTableroPrueba extends JPanel{
 	}
 	public PanelTableroPrueba(){
 		setBackground(Color.blue);
-		
+		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
 		setTablero(new char[][] { 	{'o','o','o','+','+','+','o','o','o',},
 									{'o','o','o','+','+','+','o','o','o'},
