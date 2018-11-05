@@ -87,13 +87,19 @@ public class PanelTableroPrueba extends JPanel{
 		//verificarsiganó
 	}
 	public boolean estaMarcada( int posX ,int posY){
-            for (int y = 0; y < size; y++) {
-                for (int x = 0; x < size; x++) {
 					if (tablero[posX][posY]=='x')
 						return true;
-				}		
-			}
-			return false;
+					return false;
+	}
+	public void marcarFicha( int posX ,int posY){
+            tablero[posX][posY]='x';
+	}
+	public void desmarcarFicha( int posX ,int posY){
+            tablero[posX][posY]='+';
+	}
+	
+	public void eliminarFichaMitad( int posX ,int posY){
+            ;
 	}
 	
 	public void fichasColor(){
