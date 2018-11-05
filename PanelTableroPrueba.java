@@ -14,7 +14,7 @@ public class PanelTableroPrueba extends JPanel{
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
-	
+	private Color colorFicha;
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
 	private char[][] tablero;
@@ -87,4 +87,9 @@ public class PanelTableroPrueba extends JPanel{
             }
         }
     }
+	
+	public void fichasColor(){
+		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
+		repaint();
+	}
 }
