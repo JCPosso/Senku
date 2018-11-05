@@ -18,6 +18,7 @@ public class SenkuGUI extends JFrame{
 	private JFrame SenkuGame;
 	private PanelTableroPrueba juego;
 	private JButton refrescar;
+	private JButton cambiarColor;
 	
 	/*Frame Menu*/
 	private JFrame MenuF;
@@ -59,6 +60,7 @@ public class SenkuGUI extends JFrame{
 
 		SenkuGame = new JFrame("Senku!");
 		refrescar=new JButton("refrescar");
+		cambiarColor=new JButton("Cambiar Color");
 		
 	}
 	
@@ -101,6 +103,11 @@ public class SenkuGUI extends JFrame{
 				refresque();
 			}
 		});
+		cambiarColor.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				juego.fichasColor();
+			}
+		});
 	}
 	public void prepareElementosMenu(){
 		MenuF.setLayout(new GridLayout(5,1));
@@ -118,8 +125,9 @@ public class SenkuGUI extends JFrame{
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
 		juego = new PanelTableroPrueba();		
         	SenkuGame.getContentPane().setLayout(new BorderLayout());
-        	SenkuGame.getContentPane().add(juego,BorderLayout.NORTH);
+        	SenkuGame.getContentPane().add(juego,BorderLayout.CENTER);
         	SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
+		SenkuGame.getContentPane().add(cambiarColor,BorderLayout.NORTH);
 
         	juego.repaint();
 		SenkuGame.setVisible(true);
