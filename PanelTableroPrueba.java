@@ -14,11 +14,11 @@ public class PanelTableroPrueba extends JPanel{
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
-	
+	private Color colorFicha;
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
 	private int size ;
-	
+	colorFicha=Color.red;
 	private char[][] tablero;
 	private void setTablero(char[][] tableroNuevo){
 		tablero=tableroNuevo;
@@ -26,6 +26,7 @@ public class PanelTableroPrueba extends JPanel{
 	}
 	public PanelTableroPrueba(){
 		setBackground(Color.blue);
+		
 		setPreferredSize(new Dimension(Ancho,Alto)); 
 		setTablero(new char[][] { 	{'o','o','o','+','+','+','o','o','o',},
 									{'o','o','o','+','+','+','o','o','o'},
@@ -52,7 +53,7 @@ public class PanelTableroPrueba extends JPanel{
                 for (int x = 0; x < size; x++) {
 
                     if (tablero[y][x] == '+') {
-                        pintaCirculo(g, posX, posY, FICHA_SIZE,  Color.red);
+                        pintaCirculo(g, posX, posY, FICHA_SIZE,  colorFicha);
                     } else if (tablero[y][x] == 'x') {
                         pintaCirculo(g, posX, posY, FICHA_SIZE, Color.yellow);
                     } else if (tablero[y][x] == 'o') {
@@ -94,5 +95,10 @@ public class PanelTableroPrueba extends JPanel{
 				}		
 			}
 			return false;
+	}
+	
+	public void fichasColor(){
+		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
+		repaint();
 	}
 }
