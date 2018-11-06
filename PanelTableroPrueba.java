@@ -75,6 +75,7 @@ public class PanelTableroPrueba extends JPanel{
 		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
         int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
         int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
+	System.out.println(ev.getClickCount());
 		
 	}
 	public void jugar(int fi, int ci ,int ff , int cf ){
