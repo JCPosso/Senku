@@ -27,7 +27,7 @@ public class PanelTableroPrueba extends JPanel{
 		setBackground(Color.blue);
 		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
-		setTablero(new char[][] { 	{'o','o','o','+','+','+','o','o','o',},
+		setTablero(new char[][] { 				{'o','o','o','+','+','+','o','o','o',},
 									{'o','o','o','+','+','+','o','o','o'},
 									{'o','o','o','+','+','+','o','o','o'},
 									
@@ -79,8 +79,9 @@ public class PanelTableroPrueba extends JPanel{
 	}
 	public void jugar(int fi, int ci ,int ff , int cf ){
 		if(estaMarcada(ff,cf)){
-			//marcarFicha(fi,ci);
-			//desmarcarFicha(ff,cf);
+			marcarFicha(fi,ci);
+			desmarcarFicha(ff,cf);
+			repaint();
 			//eliminarfichaMitad();
 			
 		}
