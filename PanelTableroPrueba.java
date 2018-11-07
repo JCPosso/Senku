@@ -42,7 +42,7 @@ public class PanelTableroPrueba extends JPanel{
 	);
 	}
 	 @Override
-    public void paintComponent(Graphics g) {
+public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         if (tablero != null){
@@ -52,11 +52,11 @@ public class PanelTableroPrueba extends JPanel{
                 for (int x = 0; x < size; x++) {
 
                     if (tablero[y][x] == '+') {
-                        pintaCirculo(g, posX, posY, FICHA_SIZE,  colorFicha);
+                        pintaCirculo(g, posX, posY,  Color.red);
                     } else if (tablero[y][x] == 'x') {
-                        pintaCirculo(g, posX, posY, FICHA_SIZE, Color.yellow);
+                        pintaCirculo(g, posX, posY, Color.yellow);
                     } else if (tablero[y][x] == 'o') {
-                        pintaCirculo(g, posX, posY, FICHA_SIZE,Color.blue);
+                        pintaCirculo(g, posX, posY,Color.blue);
                     }
                     posX = posX + (FICHA_SIZE * 2) + BORDE_FICHA;
                 }
@@ -66,8 +66,8 @@ public class PanelTableroPrueba extends JPanel{
         }
     }
     
-    private void pintaCirculo(Graphics g, int posX, int posY, int radio, Color color){
-        int size = radio * 2;
+    private void pintaCirculo(Graphics g, int posX, int posY, Color color){
+        int size = FICHA_SIZE * 2;
         g.setColor(color);        
         g.fillOval(posX, posY, size, size);
     }
@@ -75,16 +75,50 @@ public class PanelTableroPrueba extends JPanel{
 		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
         int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
         int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
-	System.out.println(ev.getClickCount());
-		
+		int tamaño_Tablero =8;
+		if (posiciones.size()==2){
+			jugar((int)posiciones.get(0),(int)posiciones.get(1),posX,posY);
+			System.out.println(posiciones.get(0)+" "+posiciones.get(1)+" "+posX+" "+posY);
+			posiciones=new ArrayList<Integer>();
+		}
+		else{
+			posiciones.add(posX);
+			posiciones.add(posY);
+		}
 	}
-	public void jugar(int fi, int ci ,int ff , int cf ){
-		if(estaMarcada(ff,cf)){
-			marcarFicha(fi,ci);
-			desmarcarFicha(ff,cf);
-			repaint();
-			//eliminarfichaMitad();
-			
+	public void jugar(int ci,int fi,int cf,int ff){
+		if(estaMarcada(cf,ff)){
+			if (ci-cf== 2 && fi==ff) {
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci-1,fi);
+				desmarcarFicha(cf,ff);
+			}
+			else if (ci-cf== -2 && fi==ff){
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci+1,fi);
+				desmarcarFicha(cf,ff);
+			}
+			else if (fi-ff== 2 && ci==cf) {
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci,fi-1);
+				desmarcarFicha(cf,ff);
+			}
+			else if (fi-ff== -2 && ci==cf) {
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci,fi+1);
+				desmarcarFicha(cf,ff);				
+			}
+			else{
+				System.out.println("nel");
+			}
+		repaint();
+		}
+		else{
+			System.out.println("no se puede mn");
 		}
 		//verificarsiganó
 	}
