@@ -48,16 +48,15 @@ public class SenkuGUI extends JFrame{
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
 		menusito=new JButton("Menusito");
-		add(menusito);		
+		add(menusito);
+		juego=new PanelTableroPrueba();
 		/* prepara elementos menu*/
 		MenuF = new JFrame("menu");
-		
 		Abrir = new JButton("Abrir");
 		Salvar = new JButton("Salvar");
 		Nuevo = new JButton("Nuevo");
 		Salvar_Como = new JButton("Salvar Como");
 		Salir = new JButton("Salir");
-
 		SenkuGame = new JFrame("Senku!");
 		refrescar=new JButton("refrescar");
 		cambiarColor=new JButton("Cambiar Color");
@@ -108,6 +107,11 @@ public class SenkuGUI extends JFrame{
 				juego.fichasColor();
 			}
 		});
+		juego.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent ev){
+				juego.ClickFicha(ev);
+			}
+		});
 	}
 	public void prepareElementosMenu(){
 		MenuF.setLayout(new GridLayout(5,1));
@@ -123,13 +127,11 @@ public class SenkuGUI extends JFrame{
 	public void prepareElementosTablero(){
 		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
-		juego = new PanelTableroPrueba();		
-        	SenkuGame.getContentPane().setLayout(new BorderLayout());
-        	SenkuGame.getContentPane().add(juego,BorderLayout.CENTER);
-        	SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
+        SenkuGame.getContentPane().setLayout(new BorderLayout());
+        SenkuGame.getContentPane().add(juego,BorderLayout.CENTER);
+        SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
 		SenkuGame.getContentPane().add(cambiarColor,BorderLayout.NORTH);
-
-        	juego.repaint();
+		juego.repaint();
 		SenkuGame.setVisible(true);
 	}	
 	
@@ -149,7 +151,6 @@ public class SenkuGUI extends JFrame{
 		prepareElementosMenu();
 	}
 	public void crearJuego(){
-		
 		prepareElementosTablero();
 	}
 	public void refresque(){
