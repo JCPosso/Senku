@@ -15,6 +15,7 @@ public class PanelTableroPrueba extends JPanel{
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
 	private Color colorFicha;
+	private ArrayList<Integer> posiciones ;
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
 	private int size ;
@@ -25,6 +26,7 @@ public class PanelTableroPrueba extends JPanel{
 	}
 	public PanelTableroPrueba(){
 		setBackground(Color.blue);
+		posiciones= new ArrayList<Integer>();
 		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
 		setTablero(new char[][] { 				{'o','o','o','+','+','+','o','o','o',},
