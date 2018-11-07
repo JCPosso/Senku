@@ -15,7 +15,7 @@ public class PanelTableroPrueba extends JPanel{
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
 	private Color colorFicha;
-	private ArrayList<Integer> posiciones ;
+	private ArrayList<Integer> posiciones;
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
 	private int size ;
@@ -54,7 +54,7 @@ public void paintComponent(Graphics g) {
                 for (int x = 0; x < size; x++) {
 
                     if (tablero[y][x] == '+') {
-                        pintaCirculo(g, posX, posY,  Color.red);
+                        pintaCirculo(g, posX, posY,  colorFicha);
                     } else if (tablero[y][x] == 'x') {
                         pintaCirculo(g, posX, posY, Color.yellow);
                     } else if (tablero[y][x] == 'o') {
@@ -77,7 +77,6 @@ public void paintComponent(Graphics g) {
 		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
         int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
         int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
-		int tamaño_Tablero =8;
 		if (posiciones.size()==2){
 			jugar((int)posiciones.get(0),(int)posiciones.get(1),posX,posY);
 			System.out.println(posiciones.get(0)+" "+posiciones.get(1)+" "+posX+" "+posY);
@@ -142,6 +141,9 @@ public void paintComponent(Graphics g) {
 	
 	public void fichasColor(){
 		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
+		if (colorFicha==null){
+			colorFicha=Color.red;
+		}
 		repaint();
 	}
 }
