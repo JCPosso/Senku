@@ -118,16 +118,12 @@ public class SenkuGUI extends JFrame{
 			public void actionPerformed(ActionEvent ev){
 				String intento=field.getText();
 				try{
+					opciones.setVisible(false);
 					crearJuego(Integer.parseInt(field.getText()),Integer.parseInt(field2.getText()));
 				}
 				catch(Exception e){
 					System.out.println(e.getMessage());
 				}
-			}
-		});
-		refrescar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				refresque(3,7);
 			}
 		});
 		cambiarColor.addActionListener(new ActionListener(){
@@ -136,6 +132,11 @@ public class SenkuGUI extends JFrame{
 			}
 		});
 		Nuevo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				opciones.setVisible(true);
+			}
+		});
+		refrescar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				opciones.setVisible(true);
 			}
@@ -155,7 +156,7 @@ public class SenkuGUI extends JFrame{
 	}
 	public void prepareElementosTablero(int fil , int col){
 		juego=new PanelTableroPrueba(fil,col);
-		opciones.setVisible(false);
+		opciones.setVisible(true);
 		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
         SenkuGame.getContentPane().setLayout(new BorderLayout());
@@ -195,7 +196,6 @@ public class SenkuGUI extends JFrame{
 	public void refresque(int fil, int col){
 		
 		prepareElementosTablero(fil,col);
-		prepareAccionesTablero();
 	}
 	
 	/*salvar
