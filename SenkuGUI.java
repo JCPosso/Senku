@@ -13,13 +13,13 @@ public class SenkuGUI extends JFrame{
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
-	
+	private JFrame opciones;
 	private JButton menusito;
 	private JFrame SenkuGame;
 	private PanelTableroPrueba juego;
 	private JButton refrescar;
 	private JButton cambiarColor;
-	
+	private JButton siguiente;
 	/*Frame Menu*/
 	private JFrame MenuF;
 	
@@ -48,6 +48,7 @@ public class SenkuGUI extends JFrame{
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
 		menusito=new JButton("Menusito");
+		opciones=new JFrame("Opciones");
 		add(menusito);
 		juego=new PanelTableroPrueba();
 		/* prepara elementos menu*/
@@ -60,6 +61,7 @@ public class SenkuGUI extends JFrame{
 		SenkuGame = new JFrame("Senku!");
 		refrescar=new JButton("refrescar");
 		cambiarColor=new JButton("Cambiar Color");
+		siguiente=new JButton("Siguiente");
 		
 	}
 	
@@ -92,7 +94,7 @@ public class SenkuGUI extends JFrame{
 				saveChooser(Salvar);
 			}
 		});
-		Nuevo.addActionListener(new ActionListener(){
+		siguiente.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				crearJuego();
 			}
@@ -112,7 +114,32 @@ public class SenkuGUI extends JFrame{
 				juego.ClickFicha(ev);
 			}
 		});
+		Nuevo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				prepareElementosIniciar();
+			}
+		});
 	}
+	
+	public void prepareElementosIniciar(){
+		opciones.setSize(new Dimension(Ancho/2,Alto/2));
+		opciones.setLocation((screenSize.width-(Ancho/2))/2,(screenSize.height-(Alto/2))/2);
+		opciones.setLayout(new GridLayout(4,1));
+		opciones.getContentPane().add(cambiarColor);
+		JPanel temp=new JPanel(new GridLayout(1,3));
+		JTextField field3=new JTextField("Ingrese tamaño");
+		JTextField field2=new JTextField();
+		JTextField field=new JTextField();
+		temp.add(field3);
+		temp.add(field2);
+		temp.add(field);
+		opciones.getContentPane().add(temp);
+		opciones.getContentPane().add(new JTextArea());
+		//opciones.getContentPane().add(cambiarColor);
+		opciones.getContentPane().add(siguiente);
+		opciones.setVisible(true);
+	}
+	
 	public void prepareElementosMenu(){
 		MenuF.setLayout(new GridLayout(5,1));
 		MenuF.add(Nuevo);
@@ -130,7 +157,6 @@ public class SenkuGUI extends JFrame{
         SenkuGame.getContentPane().setLayout(new BorderLayout());
         SenkuGame.getContentPane().add(juego,BorderLayout.CENTER);
         SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
-		SenkuGame.getContentPane().add(cambiarColor,BorderLayout.NORTH);
 		juego.repaint();
 		SenkuGame.setVisible(true);
 	}	
