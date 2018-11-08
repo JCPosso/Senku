@@ -109,6 +109,7 @@ public class PanelTableroPrueba extends JPanel{
 			posiciones.add(posY);
 			loadChar=tablero[posX][posY];
 			tablero[posX][posY]='a';
+			repaint();
 		}
 	}
 	public void jugar(int ci,int fi,int cf,int ff){
@@ -126,6 +127,12 @@ public class PanelTableroPrueba extends JPanel{
 		repaint();
 
 		//verificarsiganó
+	}
+	public void marcarFicha( int posX ,int posY){
+            tablero[posX][posY]='x';
+	}
+	public void desmarcarFicha( int posX ,int posY){
+            tablero[posX][posY]='+';
 	}
 	
 	public void fichasColor(){
