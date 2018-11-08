@@ -60,7 +60,7 @@ public class PanelTableroPrueba extends JPanel{
 		posiciones= new ArrayList<Integer>();
 		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
-		crearTablero(1,5);
+		crearTablero(3,7);
 		repaint();
 	}
 	 @Override
@@ -72,7 +72,7 @@ public class PanelTableroPrueba extends JPanel{
             for (int y = 0; y < tablero.length; y++) {
                 for (int x = 0; x < tablero.length; x++) {
                     if (tablero[y][x] == '+') {
-                        pintaCirculo(g, posX, posY,  Color.red);
+                        pintaCirculo(g, posX, posY,  colorFicha);
                     } else if (tablero[y][x] == 'x') {
                         pintaCirculo(g, posX, posY, Color.yellow);
                     } else if (tablero[y][x] == 'o') {
