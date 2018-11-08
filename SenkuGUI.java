@@ -135,11 +135,6 @@ public class SenkuGUI extends JFrame{
 				juego.fichasColor();
 			}
 		});
-		juego.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent ev){
-				juego.ClickFicha(ev);
-			}
-		});
 		Nuevo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				opciones.setVisible(true);
@@ -158,9 +153,9 @@ public class SenkuGUI extends JFrame{
 		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
 	}
-	public void prepareElementosTablero(int fil, int col){
-		opciones.setVisible(false);
+	public void prepareElementosTablero(int fil , int col){
 		juego=new PanelTableroPrueba(fil,col);
+		opciones.setVisible(false);
 		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
         SenkuGame.getContentPane().setLayout(new BorderLayout());
@@ -170,7 +165,13 @@ public class SenkuGUI extends JFrame{
 		SenkuGame.setVisible(true);
 		
 	}	
-	
+	public void prepareAccionesTablero(){
+		juego.addMouseListener(new MouseAdapter(){
+		public void mouseClicked(MouseEvent ev){
+				juego.ClickFicha(ev);
+			}
+		});
+	}
 	public void Salga(){
 		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit",
 				"Exit?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0){
@@ -187,10 +188,14 @@ public class SenkuGUI extends JFrame{
 		prepareElementosMenu();
 	}
 	public void crearJuego(int fil, int col){
+		
 		prepareElementosTablero(fil,col);
+		prepareAccionesTablero();
 	}
 	public void refresque(int fil, int col){
+		
 		prepareElementosTablero(fil,col);
+		prepareAccionesTablero();
 	}
 	
 	/*salvar
