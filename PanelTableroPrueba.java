@@ -19,6 +19,7 @@ public class PanelTableroPrueba extends JPanel{
 	private final int BORDE_FICHA=8;
 	private int size ;
 	private int tamano;
+	private char loadChar ;
 	private ArrayList<Integer> posiciones ;
 	private char[][] tablero;
 	private void setTablero(char[][] tableroNuevo){
@@ -77,6 +78,8 @@ public class PanelTableroPrueba extends JPanel{
                         pintaCirculo(g, posX, posY, Color.yellow);
                     } else if (tablero[y][x] == 'o') {
                         pintaCirculo(g, posX, posY,Color.blue);
+                    } else if (tablero[y][x] == 'a') {
+                        pintaCirculo(g, posX, posY,Color.green);
                     }
                     posX = posX + (FICHA_SIZE * 2) + BORDE_FICHA;
                 }
@@ -104,58 +107,25 @@ public class PanelTableroPrueba extends JPanel{
 		else{
 			posiciones.add(posX);
 			posiciones.add(posY);
+			loadChar=tablero[posX][posY];
+			tablero[posX][posY]='a';
 		}
 	}
 	public void jugar(int ci,int fi,int cf,int ff){
-		if(estaMarcada(cf,ff)){
-			if (ci-cf== 2 && fi==ff) {
+		Movimiento jugada = new Movimiento(ci,fi,cf,ff);
+		if(jugada.esValido()&&tablero[jugada.getMedioX()][jugada.getMedioY()]=='+' && tablero[cf][ff]=='x'){
 				System.out.println(ci+" "+fi+" "+cf+" "+ff);
 				marcarFicha(ci,fi);
-				marcarFicha(ci-1,fi);
+				marcarFicha(jugada.getMedioX(),jugada.getMedioY());
 				desmarcarFicha(cf,ff);
-			}
-			else if (ci-cf== -2 && fi==ff){
-				System.out.println(ci+" "+fi+" "+cf+" "+ff);
-				marcarFicha(ci,fi);
-				marcarFicha(ci+1,fi);
-				desmarcarFicha(cf,ff);
-			}
-			else if (fi-ff== 2 && ci==cf) {
-				System.out.println(ci+" "+fi+" "+cf+" "+ff);
-				marcarFicha(ci,fi);
-				marcarFicha(ci,fi-1);
-				desmarcarFicha(cf,ff);
-			}
-			else if (fi-ff== -2 && ci==cf) {
-				System.out.println(ci+" "+fi+" "+cf+" "+ff);
-				marcarFicha(ci,fi);
-				marcarFicha(ci,fi+1);
-				desmarcarFicha(cf,ff);				
-			}
-			else{
+		}			
+		else{
 				System.out.println("nel");
+				tablero[ci][fi]=loadChar;
 			}
 		repaint();
-		}
-		else{
-			System.out.println("no se puede mn");
-		}
+
 		//verificarsiganó
-	}
-	public boolean estaMarcada( int posX ,int posY){
-					if (tablero[posX][posY]=='x')
-						return true;
-					return false;
-	}
-	public void marcarFicha( int posX ,int posY){
-            tablero[posX][posY]='x';
-	}
-	public void desmarcarFicha( int posX ,int posY){
-            tablero[posX][posY]='+';
-	}
-	
-	public void eliminarFichaMitad( int posX ,int posY){
-            ;
 	}
 	
 	public void fichasColor(){
