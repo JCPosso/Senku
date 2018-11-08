@@ -20,6 +20,9 @@ public class SenkuGUI extends JFrame{
 	private JButton refrescar;
 	private JButton cambiarColor;
 	private JButton siguiente;
+	private JTextField field;
+	private JTextField field2;
+	private JPanel Dimensiones;
 	/*Frame Menu*/
 	private JFrame MenuF;
 	
@@ -62,6 +65,19 @@ public class SenkuGUI extends JFrame{
 		refrescar=new JButton("refrescar");
 		cambiarColor=new JButton("Cambiar Color");
 		siguiente=new JButton("Siguiente");
+		JTextField field2=new JTextField();
+		JTextField field=new JTextField();
+		Dimensiones=new JPanel(new GridLayout(1,2));
+		Dimensiones.add(field);
+		Dimensiones.add(field2);
+		opciones.setSize(new Dimension(Ancho/2,Alto/2));
+		opciones.setLocation((screenSize.width-(Ancho/2))/2,(screenSize.height-(Alto/2))/2);
+		opciones.setLayout(new GridLayout(4,1));
+		opciones.getContentPane().add(cambiarColor);
+		opciones.getContentPane().add(Dimensiones);
+		opciones.getContentPane().add(new JTextArea());
+		opciones.getContentPane().add(siguiente);
+		
 		
 	}
 	
@@ -116,49 +132,9 @@ public class SenkuGUI extends JFrame{
 		});
 		Nuevo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				prepareElementosIniciar();
+				opciones.setVisible(true);
 			}
 		});
-	}
-	
-	public void prepareElementosIniciar(){
-		opciones.setSize(new Dimension(Ancho/2,Alto/2));
-		opciones.setLocation((screenSize.width-(Ancho/2))/2,(screenSize.height-(Alto/2))/2);
-		opciones.setLayout(new GridLayout(4,1));
-		
-		JPanel temp0=new JPanel(new GridLayout(1,2));
-		JLabel field11=new JLabel("Color :");
-		JTextField field22=new JTextField("azul - roja");
-		field22.setEditable(false);
-		temp0.add(field11);
-		temp0.add(field22);
-		
-		
-		JPanel temp=new JPanel(new GridLayout(1,4));
-		JLabel field3=new JLabel("Set Size :");
-		JLabel field4=new JLabel("");
-		JTextField field2=new JTextField("3");
-		JTextField field=new JTextField("7");
-		field2.setEditable(false);
-		field.setEditable(false);
-		temp.add(field3);
-		temp.add(field4);
-		temp.add(field2);
-		temp.add(field);
-
-		JPanel temp2=new JPanel(new GridLayout(1,2));
-		JLabel field111=new JLabel("Ubicacion de las piezas :");
-		JTextField field222=new JTextField("Posicion de inicio");
-		field222.setEditable(false);
-		temp2.add(field111);
-		temp2.add(field222);		
-		
-		opciones.getContentPane().add(temp0);
-		opciones.getContentPane().add(temp);
-		opciones.getContentPane().add(temp2);
-		//opciones.getContentPane().add(cambiarColor);
-		opciones.getContentPane().add(siguiente);
-		opciones.setVisible(true);
 	}
 	
 	public void prepareElementosMenu(){
@@ -173,6 +149,7 @@ public class SenkuGUI extends JFrame{
 		MenuF.setVisible(true);
 	}
 	public void prepareElementosTablero(){
+		opciones.setVisible(false);
 		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
         SenkuGame.getContentPane().setLayout(new BorderLayout());
@@ -180,6 +157,7 @@ public class SenkuGUI extends JFrame{
         SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
 		juego.repaint();
 		SenkuGame.setVisible(true);
+		
 	}	
 	
 	public void Salga(){
