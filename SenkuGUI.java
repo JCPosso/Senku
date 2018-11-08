@@ -47,13 +47,13 @@ public class SenkuGUI extends JFrame{
 	}
 	
 	private void prepareElementos(){
+		juego=new PanelTableroPrueba(3,7);
 		setTitle("Senku");
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
 		menusito=new JButton("Menusito");
 		opciones=new JFrame("Opciones");
 		add(menusito);
-		juego=new PanelTableroPrueba();
 		/* prepara elementos menu*/
 		MenuF = new JFrame("menu");
 		Abrir = new JButton("Abrir");
@@ -65,8 +65,8 @@ public class SenkuGUI extends JFrame{
 		refrescar=new JButton("refrescar");
 		cambiarColor=new JButton("Cambiar Color");
 		siguiente=new JButton("Siguiente");
-		JTextField field2=new JTextField();
-		JTextField field=new JTextField();
+		field2=new JTextField();
+		field=new JTextField();
 		Dimensiones=new JPanel(new GridLayout(1,2));
 		Dimensiones.add(field);
 		Dimensiones.add(field2);
@@ -110,14 +110,21 @@ public class SenkuGUI extends JFrame{
 				saveChooser(Salvar);
 			}
 		});
+		
 		siguiente.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				crearJuego();
+				String intento=field.getText();
+				try{
+					crearJuego(Integer.parseInt(field.getText()),Integer.parseInt(field2.getText()));
+				}
+				catch(Exception e){
+					System.out.println(e.getMessage());
+				}
 			}
 		});
 		refrescar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				refresque();
+				refresque(3,7);
 			}
 		});
 		cambiarColor.addActionListener(new ActionListener(){
@@ -148,8 +155,9 @@ public class SenkuGUI extends JFrame{
 		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
 	}
-	public void prepareElementosTablero(){
+	public void prepareElementosTablero(int fil, int col){
 		opciones.setVisible(false);
+		juego=new PanelTableroPrueba(fil,col);
 		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
         SenkuGame.getContentPane().setLayout(new BorderLayout());
@@ -175,11 +183,11 @@ public class SenkuGUI extends JFrame{
 	public void Pausa(){
 		prepareElementosMenu();
 	}
-	public void crearJuego(){
-		prepareElementosTablero();
+	public void crearJuego(int fil, int col){
+		prepareElementosTablero(fil,col);
 	}
-	public void refresque(){
-		prepareElementosTablero();
+	public void refresque(int fil, int col){
+		prepareElementosTablero(fil,col);
 	}
 	
 	/*salvar
