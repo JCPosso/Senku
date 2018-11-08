@@ -160,6 +160,9 @@ public class PanelTableroPrueba extends JPanel{
 	
 	public void fichasColor(){
 		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
+		if (colorFicha==null){	
+			colorFicha=Color.red;	
+		}
 		repaint();
 	}
 }
