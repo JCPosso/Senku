@@ -55,12 +55,12 @@ public class PanelTableroPrueba extends JPanel{
 			tablero[mid][iter]='+';
 		}
 	}
-	public PanelTableroPrueba(){
+	public PanelTableroPrueba(int fil, int col){
 		setBackground(Color.blue);
 		posiciones= new ArrayList<Integer>();
 		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
-		crearTablero(3,7);
+		crearTablero(fil,col);
 		repaint();
 	}
 	 @Override
