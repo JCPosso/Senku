@@ -40,12 +40,13 @@ public class PanelTableroPrueba extends JPanel{
 		int retroceder=mid;
 		while( cont!=mini_col) {
 			if (cont%2==0){
-				avanzar++;
-				dibujarCruz(avanzar);
-			}
-			else{
 				retroceder--;
 				dibujarCruz(retroceder);
+
+			}
+			else{
+				avanzar++;
+				dibujarCruz(avanzar);
 			}
 			cont++;
 		}
