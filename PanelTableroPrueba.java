@@ -9,207 +9,142 @@ import java.util.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
-public class SenkuGUI extends JFrame{
+public class PanelTableroPrueba extends JPanel{
+	
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
 	private	int Alto=screenSize.height/2;
-	private JFrame opciones;
-	private JButton menusito;
-	private JFrame SenkuGame;
-	private PanelTableroPrueba juego;
-	private JButton refrescar;
-	private JButton cambiarColor;
-	private JButton siguiente;
-	/*Frame Menu*/
-	private JFrame MenuF;
-	
-	/*Panel Nuevo*/
-    private JButton Nuevo;
-    
-    /*Panel Abrir*/
-	private JButton Abrir;
-    
-    /*Panel Salvar*/
-	private JButton Salvar;
-	
-	/*Panel Salvar Como*/
-	private JButton Salvar_Como;
-	
-	/*Panel Salir*/
-	private JButton Salir;
-	
-	private SenkuGUI(){
-		prepareElementos();
-		prepareAcciones();
+	private Color colorFicha;
+	private ArrayList<Integer> posiciones;
+	private final int FICHA_SIZE=10;
+	private final int BORDE_FICHA=8;
+	private int size ;
+	private char[][] tablero;
+	private void setTablero(char[][] tableroNuevo){
+		tablero=tableroNuevo;
+		size = tablero.length;
 	}
-	
-	private void prepareElementos(){
-		setTitle("Senku");
-		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
-		setSize(new Dimension(Ancho,Alto));
-		menusito=new JButton("Menusito");
-		opciones=new JFrame("Opciones");
-		add(menusito);
-		juego=new PanelTableroPrueba();
-		/* prepara elementos menu*/
-		MenuF = new JFrame("menu");
-		Abrir = new JButton("Abrir");
-		Salvar = new JButton("Salvar");
-		Nuevo = new JButton("Siguiente");
-		Salvar_Como = new JButton("Salvar Como");
-		Salir = new JButton("Salir");
-		SenkuGame = new JFrame("Senku!");
-		refrescar=new JButton("refrescar");
-		cambiarColor=new JButton("Cambiar Color");
-		siguiente=new JButton("Siguiente");
-		
+	public PanelTableroPrueba(){
+		setBackground(Color.blue);
+		posiciones= new ArrayList<Integer>();
+		colorFicha=Color.red;
+		setPreferredSize(new Dimension(Ancho,Alto)); 
+		setTablero(new char[][] { 				{'o','o','o','+','+','+','o','o','o',},
+									{'o','o','o','+','+','+','o','o','o'},
+									{'o','o','o','+','+','+','o','o','o'},
+									
+									{'+','+','+','+','+','+','+','+','+'},
+									{'+','+','+','+','x','+','+','+','+'},
+									{'+','+','+','+','+','+','+','+','+'},
+									
+									{'o','o','o','+','+','+','o','o','o'},
+									{'o','o','o','+','+','+','o','o','o'},
+									{'o','o','o','+','+','+','o','o','o'},
 	}
-	
-	public void prepareAcciones(){
-		setDefaultCloseOperation(0);
-        	addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent evt){
-				Salga();
-			}
-		});
-		MenuF.addWindowListener(new WindowAdapter(){
-			@Override
-			public void windowClosing(WindowEvent evt2){
-				Salga2();
-			}
-		});
-		menusito.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				Pausa();
-			}
-		});
-		Abrir.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				openChooser(Abrir);
-			}
-		});
-		Salvar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				saveChooser(Salvar);
-			}
-		});
-		siguiente.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				crearJuego();
-			}
-		});
-		refrescar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				refresque();
-			}
-		});
-		cambiarColor.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				juego.fichasColor();
-			}
-		});
-		juego.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent ev){
-				juego.ClickFicha(ev);
-			}
-		});
-		Nuevo.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				prepareElementosIniciar();
-			}
-		});
+	);
 	}
-	
-	public void prepareElementosIniciar(){
-		opciones.setSize(new Dimension(Ancho/2,Alto/2));
-		opciones.setLocation((screenSize.width-(Ancho/2))/2,(screenSize.height-(Alto/2))/2);
-		opciones.setLayout(new GridLayout(4,1));
-		opciones.getContentPane().add(cambiarColor);
-		JPanel temp=new JPanel(new GridLayout(1,3));
-		JTextField field3=new JTextField();
-		JTextField field2=new JTextField();
-		JTextField field=new JTextField();
-		temp.add(field3)
-		temp.add(field2);
-		temp.add(field);
-		opciones.getContentPane().add(temp);
-		opciones.getContentPane().add(new JTextArea());
-		//opciones.getContentPane().add(cambiarColor);
-		opciones.getContentPane().add(siguiente);
-		opciones.setVisible(true);
-	}
-	
-	public void prepareElementosMenu(){
-		MenuF.setLayout(new GridLayout(5,1));
-		MenuF.add(Nuevo);
-		MenuF.add(Abrir);
-		MenuF.add(Salvar);
-		MenuF.add(Salvar_Como);
-		MenuF.add(Salir);
-		MenuF.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
-		MenuF.setSize(new Dimension(Ancho,Alto));
-		MenuF.setVisible(true);
-	}
-	public void prepareElementosTablero(){
-		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
-		SenkuGame.setSize(new Dimension(Ancho,Alto));
-        SenkuGame.getContentPane().setLayout(new BorderLayout());
-        SenkuGame.getContentPane().add(juego,BorderLayout.CENTER);
-        SenkuGame.getContentPane().add(refrescar,BorderLayout.SOUTH);
-		juego.repaint();
-		SenkuGame.setVisible(true);
-	}	
-	
-	public void Salga(){
-		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit",
-				"Exit?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0){
-					System.exit(0);
-		}
-	}
-		public void Salga2(){
-		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit to Menu?",
-				"Exit?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)==0){
-					MenuF.dispose();
-		}
-	}
-	public void Pausa(){
-		prepareElementosMenu();
-	}
-	public void crearJuego(){
-		prepareElementosTablero();
-	}
-	public void refresque(){
-		prepareElementosTablero();
-	}
-	
-	/*salvar
-	*/
-	public void openChooser(Component par){
-		JFileChooser fc=new JFileChooser();
-		FileNameExtensionFilter filtro =new FileNameExtensionFilter("Archivos java","java");
-		fc.setFileFilter(filtro);
-		int r=fc.showOpenDialog(par);
-		if(r==JFileChooser.APPROVE_OPTION){
-			fc.getSelectedFile();
-			System.out.println("You chose to open this file: " +
-            fc.getSelectedFile().getName());
-		}
-		
-	}
-	/*guardar
-	*/	
-	public void saveChooser(Component par){
-		JFileChooser fc=new JFileChooser();
-		int r=fc.showSaveDialog(par);
-		if(r==JFileChooser.APPROVE_OPTION){
-			System.out.println("El archivo fue guardado"+ "Action :"+JFileChooser.APPROVE_OPTION);
-		}
-	}
+	 @Override
+public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
+        if (tablero != null){
+            int posX = BORDE_FICHA;
+            int posY = BORDE_FICHA;
+            for (int y = 0; y < size; y++) {
+                for (int x = 0; x < size; x++) {
 
-public static void main(String args[]){
-	SenkuGUI gui=new SenkuGUI();
-	gui.setVisible(true);
+                    if (tablero[y][x] == '+') {
+                        pintaCirculo(g, posX, posY,  colorFicha);
+                    } else if (tablero[y][x] == 'x') {
+                        pintaCirculo(g, posX, posY, Color.yellow);
+                    } else if (tablero[y][x] == 'o') {
+                        pintaCirculo(g, posX, posY,Color.blue);
+                    }
+                    posX = posX + (FICHA_SIZE * 2) + BORDE_FICHA;
+                }
+                posX = BORDE_FICHA;
+                posY = posY + (FICHA_SIZE * 2) + BORDE_FICHA;
+            }
+        }
+    }
+    
+    private void pintaCirculo(Graphics g, int posX, int posY, Color color){
+        int size = FICHA_SIZE * 2;
+        g.setColor(color);        
+        g.fillOval(posX, posY, size, size);
+    }
+	public void ClickFicha(MouseEvent ev){
+		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
+        int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
+        int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
+		
+		if (posiciones.size()==2){
+			jugar((int)posiciones.get(0),(int)posiciones.get(1),posX,posY);
+			System.out.println(posiciones.get(0)+" "+posiciones.get(1)+" "+posX+" "+posY);
+			posiciones=new ArrayList<Integer>();
+		}
+		else{
+			posiciones.add(posX);
+			posiciones.add(posY);
+		}
+	}
+	public void jugar(int ci,int fi,int cf,int ff){
+		if(estaMarcada(cf,ff)){
+			if (ci-cf== 2 && fi==ff) {
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci-1,fi);
+				desmarcarFicha(cf,ff);
+			}
+			else if (ci-cf== -2 && fi==ff){
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci+1,fi);
+				desmarcarFicha(cf,ff);
+			}
+			else if (fi-ff== 2 && ci==cf) {
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci,fi-1);
+				desmarcarFicha(cf,ff);
+			}
+			else if (fi-ff== -2 && ci==cf) {
+				System.out.println(ci+" "+fi+" "+cf+" "+ff);
+				marcarFicha(ci,fi);
+				marcarFicha(ci,fi+1);
+				desmarcarFicha(cf,ff);				
+			}
+			else{
+				System.out.println("nel");
+			}
+		repaint();
+		}
+		else{
+			System.out.println("no se puede mn");
+		}
+		//verificarsiganó
+	}
+	public boolean estaMarcada( int posX ,int posY){
+					if (tablero[posX][posY]=='x')
+						return true;
+					return false;
+	}
+	public void marcarFicha( int posX ,int posY){
+            tablero[posX][posY]='x';
+	}
+	public void desmarcarFicha( int posX ,int posY){
+            tablero[posX][posY]='+';
+	}
+	
+	public void eliminarFichaMitad( int posX ,int posY){
+            ;
+	}
+	
+	public void fichasColor(){
+		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
+		if (colorFicha==null){
+			colorFicha=Color.red;
+		}
+		repaint();
 	}
 }
