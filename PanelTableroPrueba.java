@@ -18,30 +18,46 @@ public class PanelTableroPrueba extends JPanel{
 	private ArrayList<Integer> posiciones;
 	private final int FICHA_SIZE=10;
 	private final int BORDE_FICHA=8;
-	private int size ;
+	private int tamano;
 	private char[][] tablero;
-	private void setTablero(char[][] tableroNuevo){
-		tablero=tableroNuevo;
-		size = tablero.length;
+	
+	private void crearTablero(int mini_col, int n_filas){
+		tablero = new char[n_filas][n_filas];
+		tamano=n_filas;
+		/*dibuja cruz del centro*/
+		int mid=(n_filas/2 + n_filas%2)-1;
+		int cont=0;
+		dibujarCruz(mid);
+		tablero[mid][mid]='x';
+		cont++;
+		/*dibuja el resto de las cruces*/
+		int avanzar=mid;
+		int retroceder=mid;
+		while( cont!=mini_col) {
+			if (cont%2==0){
+				avanzar++;
+				dibujarCruz(avanzar);
+			}
+			else{
+				retroceder--;
+				dibujarCruz(retroceder);
+			}
+			cont++;
+		}
+	}
+	private void dibujarCruz(int mid){
+		for (int iter = 0; iter < tamano; iter++) {
+			tablero[iter][mid]='+';
+			tablero[mid][iter]='+';
+		}
 	}
 	public PanelTableroPrueba(){
 		setBackground(Color.blue);
 		posiciones= new ArrayList<Integer>();
 		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
-		setTablero(new char[][] { 				{'o','o','o','+','+','+','o','o','o',},
-									{'o','o','o','+','+','+','o','o','o'},
-									{'o','o','o','+','+','+','o','o','o'},
-									
-									{'+','+','+','+','+','+','+','+','+'},
-									{'+','+','+','+','x','+','+','+','+'},
-									{'+','+','+','+','+','+','+','+','+'},
-									
-									{'o','o','o','+','+','+','o','o','o'},
-									{'o','o','o','+','+','+','o','o','o'},
-									{'o','o','o','+','+','+','o','o','o'},
-	}
-	);
+		crearTablero(1,5);
+		repaint();
 	}
 	 @Override
 public void paintComponent(Graphics g) {
@@ -50,8 +66,8 @@ public void paintComponent(Graphics g) {
         if (tablero != null){
             int posX = BORDE_FICHA;
             int posY = BORDE_FICHA;
-            for (int y = 0; y < size; y++) {
-                for (int x = 0; x < size; x++) {
+            for (int y = 0; y < tablero.length; y++) {
+                for (int x = 0; x < tablero.length; x++) {
 
                     if (tablero[y][x] == '+') {
                         pintaCirculo(g, posX, posY,  colorFicha);
