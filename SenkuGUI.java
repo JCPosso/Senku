@@ -23,6 +23,7 @@ public class SenkuGUI extends JFrame{
 	private JTextField field;
 	private JTextField field2;
 	private JPanel Dimensiones;
+	private JLabel Dimen;
 	/*Frame Menu*/
 	private JFrame MenuF;
 	
@@ -66,8 +67,10 @@ public class SenkuGUI extends JFrame{
 		cambiarColor=new JButton("Cambiar Color");
 		siguiente=new JButton("Siguiente");
 		field2=new JTextField();
+		Dimen=new JLabel("Escoga las \n dimensiones");
 		field=new JTextField();
-		Dimensiones=new JPanel(new GridLayout(1,2));
+		Dimensiones=new JPanel(new GridLayout(1,3));
+		Dimensiones.add(Dimen);
 		Dimensiones.add(field);
 		Dimensiones.add(field2);
 		opciones.setSize(new Dimension(Ancho/2,Alto/2));
