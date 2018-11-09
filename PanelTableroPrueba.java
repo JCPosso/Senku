@@ -99,18 +99,22 @@ public class PanelTableroPrueba extends JPanel{
 		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
         int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
         int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
-		int tamano_Tablero =8;
-		if (posiciones.size()==2){
-			jugar((int)posiciones.get(0),(int)posiciones.get(1),posX,posY);
-			System.out.println(posiciones.get(0)+" "+posiciones.get(1)+" "+posX+" "+posY);
-			posiciones=new ArrayList<Integer>();
+		if (!(posX>=tamano) && !(posY>=tamano)){ 
+			if (posiciones.size()==2){
+				jugar((int)posiciones.get(0),(int)posiciones.get(1),posX,posY);
+				System.out.println(posiciones.get(0)+" "+posiciones.get(1)+" "+posX+" "+posY);
+				posiciones=new ArrayList<Integer>();
+			}
+			else{
+				posiciones.add(posX);
+				posiciones.add(posY);
+				loadChar=tablero[posX][posY];
+				tablero[posX][posY]='a';
+				repaint();
+			}
 		}
 		else{
-			posiciones.add(posX);
-			posiciones.add(posY);
-			loadChar=tablero[posX][posY];
-			tablero[posX][posY]='a';
-			repaint();
+			JOptionPane.showMessageDialog(this,"lugar fuera del juego, por favor intente de nuevo","importante",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	public void jugar(int ci,int fi,int cf,int ff){
