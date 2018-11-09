@@ -51,7 +51,6 @@ public class SenkuGUI extends JFrame{
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
 		menusito=new JButton("Menusito");
-		opciones=new JFrame("Opciones");
 		add(menusito);
 		/* prepara elementos menu*/
 		MenuF = new JFrame("menu");
@@ -64,22 +63,7 @@ public class SenkuGUI extends JFrame{
 		refrescar=new JButton("refrescar");
 		cambiarColor=new JButton("Cambiar Color");
 		siguiente=new JButton("Siguiente");
-		field2=new JTextField();
-		Dimen=new JLabel("Escoga las \n dimensiones");
-		field=new JTextField();
-		Dimensiones=new JPanel(new GridLayout(1,3));
-		Dimensiones.add(Dimen);
-		Dimensiones.add(field);
-		Dimensiones.add(field2);
-		opciones.setSize(new Dimension(Ancho/2,Alto/2));
-		opciones.setLocation((screenSize.width-(Ancho/2))/2,(screenSize.height-(Alto/2))/2);
-		opciones.setLayout(new GridLayout(4,1));
-		opciones.getContentPane().add(cambiarColor);
-		opciones.getContentPane().add(Dimensiones);
-		opciones.getContentPane().add(new JTextArea());
-		opciones.getContentPane().add(siguiente);
-		
-		
+		opciones=new JFrame("Opciones");
 	}
 	
 	public void prepareAcciones(){
@@ -116,8 +100,7 @@ public class SenkuGUI extends JFrame{
 			public void actionPerformed(ActionEvent ev){
 				String intento=field.getText();
 				try{
-					opciones.setVisible(false);
-					crearJuego(Integer.parseInt(field.getText()),Integer.parseInt(field2.getText()));
+					crearJuego(Integer.parseInt(field.getText()),Integer.parseInt(field2.getText())); 
 				}
 				catch(Exception e){
 					System.out.println(e.getMessage());
@@ -131,16 +114,28 @@ public class SenkuGUI extends JFrame{
 		});
 		Nuevo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				opciones.setVisible(true);
-			}
-		});
-		refrescar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-				opciones.setVisible(true);
+				prepareElementosOpciones();
 			}
 		});
 	}
-	
+	public void prepareElementosOpciones(){
+		field2=new JTextField();
+		Dimen=new JLabel("Escoga las \n dimensiones");
+		field=new JTextField();
+		Dimensiones=new JPanel(new GridLayout(1,3));
+		Dimensiones.add(Dimen);
+		Dimensiones.add(field);
+		Dimensiones.add(field2);
+		opciones.setSize(new Dimension(Ancho/2,Alto/2));
+		opciones.setLocation((screenSize.width-(Ancho/2))/2,(screenSize.height-(Alto/2))/2);
+		opciones.setLayout(new GridLayout(4,1));
+		opciones.getContentPane().add(cambiarColor);
+		opciones.getContentPane().add(Dimensiones);
+		opciones.getContentPane().add(new JTextArea());
+		opciones.getContentPane().add(siguiente);
+		opciones.setVisible(true);
+		
+	}
 	public void prepareElementosMenu(){
 		MenuF.setLayout(new GridLayout(5,1));
 		MenuF.add(Nuevo);
@@ -169,6 +164,22 @@ public class SenkuGUI extends JFrame{
 				juego.ClickFicha(ev);
 			}
 		});
+		refrescar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				opciones.setVisible(true);
+			}
+		});
+		siguiente.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				String intento=field.getText();
+				try{
+					crearJuego(Integer.parseInt(field.getText()),Integer.parseInt(field2.getText())); 
+				}
+				catch(Exception e){
+					System.out.println(e.getMessage());
+				}
+			}
+		});
 	}
 	public void Salga(){
 		if (JOptionPane.showConfirmDialog(this,"Are you sure you want to exit",
@@ -185,10 +196,9 @@ public class SenkuGUI extends JFrame{
 	public void Pausa(){
 		prepareElementosMenu();
 	}
-	public void crearJuego(int fil, int col){		
+	public void crearJuego(int fil, int col){	
 		prepareElementosTablero();
 		juego.crearTablero(fil,col);
-		juego.repaint();
 		prepareAccionesTablero();
 	}
 	public void crearJuego(){	
