@@ -1,5 +1,5 @@
 package presentacion;
-
+import aplicacion.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,8 +7,7 @@ import javax.swing.event.*;
 import java.util.*;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-
+import java.io.*;
 public class SenkuGUI extends JFrame{
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
@@ -16,7 +15,7 @@ public class SenkuGUI extends JFrame{
 	private JFrame opciones;
 	private JButton menusito;
 	private JFrame SenkuGame;
-	private PanelTableroPrueba juego;
+	private PanelTablero juego;
 	private JButton refrescar;
 	private JButton cambiarColor;
 	private JButton siguiente;
@@ -48,7 +47,6 @@ public class SenkuGUI extends JFrame{
 	}
 	
 	private void prepareElementos(){
-		juego=new PanelTableroPrueba(3,7);
 		setTitle("Senku");
 		setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		setSize(new Dimension(Ancho,Alto));
@@ -154,9 +152,8 @@ public class SenkuGUI extends JFrame{
 		MenuF.setSize(new Dimension(Ancho,Alto));
 		MenuF.setVisible(true);
 	}
-	public void prepareElementosTablero(int fil , int col){
-		juego=new PanelTableroPrueba(fil,col);
-		opciones.setVisible(true);
+	public void prepareElementosTablero(){
+		juego=	new PanelTablero();	
 		SenkuGame.setLocation((screenSize.width-Ancho)/2,(screenSize.height-Alto)/2);
 		SenkuGame.setSize(new Dimension(Ancho,Alto));
         SenkuGame.getContentPane().setLayout(new BorderLayout());
@@ -188,14 +185,18 @@ public class SenkuGUI extends JFrame{
 	public void Pausa(){
 		prepareElementosMenu();
 	}
-	public void crearJuego(int fil, int col){
-		
-		prepareElementosTablero(fil,col);
+	public void crearJuego(int fil, int col){		
+		prepareElementosTablero();
+		juego.crearTablero(fil,col);
+		juego.repaint();
+		prepareAccionesTablero();
+	}
+	public void crearJuego(){	
+		prepareElementosTablero();
 		prepareAccionesTablero();
 	}
 	public void refresque(int fil, int col){
-		
-		prepareElementosTablero(fil,col);
+		prepareElementosTablero();	
 	}
 	
 	/*salvar
@@ -210,7 +211,30 @@ public class SenkuGUI extends JFrame{
 			System.out.println("You chose to open this file: " +
             fc.getSelectedFile().getName());
 		}
-		
+		File file = 	fc.getSelectedFile();
+		try{
+			BufferedReader filess= new BufferedReader(new FileReader(file));
+			int tam=filess.readLine().length();
+			
+			int cont=0;
+			crearJuego();
+			BufferedReader files= new BufferedReader(new FileReader(file));
+			char[][] tab = juego.getTablero();
+			tab=new char[tam][tam];
+			String linea;
+			while((linea=files.readLine())!=null) {
+			   /*Imprime la linea leida*/
+				System.out.println(linea);
+			   tab[cont]=(linea.toCharArray());
+			   cont++;		   
+			   }
+			files.close();
+			juego.setTablero(tab);
+			juego.repaint();
+		}catch (Exception e){
+			JOptionPane.showConfirmDialog(this,"El archivo no existe O es invalido ",
+				"NOT FOUND",JOptionPane.QUESTION_MESSAGE);
+		}
 	}
 	/*guardar
 	*/	
