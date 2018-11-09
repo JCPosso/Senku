@@ -1,5 +1,4 @@
-package presentacion;
-
+package aplicacion;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,7 +8,7 @@ import java.util.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
-public class PanelTableroPrueba extends JPanel{
+public class PanelTablero extends JPanel{
 	
 	private final Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 	private	int Ancho=screenSize.width/2;
@@ -22,11 +21,7 @@ public class PanelTableroPrueba extends JPanel{
 	private char loadChar ;
 	private ArrayList<Integer> posiciones ;
 	private char[][] tablero;
-	private void setTablero(char[][] tableroNuevo){
-		tablero=tableroNuevo;
-		size = tablero.length;
-	}
-	private void crearTablero(int mini_col, int n_filas){
+	public void crearTablero(int mini_col, int n_filas){
 		tablero = new char[n_filas][n_filas];
 		tamano=n_filas;
 		/*dibuja cruz del centro*/
@@ -57,12 +52,11 @@ public class PanelTableroPrueba extends JPanel{
 			tablero[mid][iter]='+';
 		}
 	}
-	public PanelTableroPrueba(int fil, int col){
+	public PanelTablero(){
 		setBackground(Color.blue);
 		posiciones= new ArrayList<Integer>();
 		colorFicha=Color.red;
 		setPreferredSize(new Dimension(Ancho,Alto)); 
-		crearTablero(fil,col);
 		repaint();
 	}
 	 @Override
@@ -96,6 +90,7 @@ public class PanelTableroPrueba extends JPanel{
         g.fillOval(posX, posY, size, size);
     }
 	public void ClickFicha(MouseEvent ev){
+		
 		int espacioMaximoFicha = (FICHA_SIZE * 2) + BORDE_FICHA ;
         int posY = (ev.getX() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
         int posX = (ev.getY() - (BORDE_FICHA/ 2)) / espacioMaximoFicha;
@@ -139,7 +134,12 @@ public class PanelTableroPrueba extends JPanel{
 	public void desmarcarFicha( int posX ,int posY){
             tablero[posX][posY]='+';
 	}
-	
+	public char[][] getTablero(){
+		return tablero;
+	}
+	public void setTablero(char[][] Newtablero){
+		tablero = Newtablero;
+	}
 	public void fichasColor(){
 		colorFicha=JColorChooser.showDialog(null,"Escoge el color de las fichas.",colorFicha);
 		if (colorFicha==null){	
